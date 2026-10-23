@@ -13,10 +13,9 @@ Idempotent: if source TA already == factory image, skips.
 """
 import os, hashlib, shutil
 
-TA_DEBUG = ("/media/ben/work_2021/mtk/<workspace>/vendor/mediatek/proprietary/trustzone/"
-            "该厂商 TEE/source/binary/sec_modules/ta_debug/b657ba17-b3b3-47f5-b389-6b53f30c0baf.ta")
-TA_RELEASE = ("/media/ben/work_2021/mtk/<workspace>/vendor/mediatek/proprietary/trustzone/"
-              "该厂商 TEE/source/binary/sec_modules/b657ba17-b3b3-47f5-b389-6b53f30c0baf.ta")
+from paths import TA_DEBUG, TA_RELEASE, require_workspace  # noqa: E402
+
+require_workspace()
 FACTORY = "/tmp/113_b657.ta"  # exact device-original TA
 
 FACTORY_SHA = "16a7db967ed3c5c454e46d5646b875c30d2ea9b5e6751d0e93aca82a149e43cb"

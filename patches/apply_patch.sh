@@ -18,5 +18,5 @@ fi
 
 echo ""
 echo "✓ Build ready. Continue with:"
-echo "  cd /media/ben/work_2021/mtk/<workspace>"
+echo "  cd $WORKSPACE   # 你的固件工程根目录"
 echo "  ./build.sh"

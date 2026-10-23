@@ -38,8 +38,9 @@ Why NOT use a stronger b.n to a "movs r0, #-1; bx lr" stub:
 """
 import sys, os, hashlib
 
-TA_DEBUG   = "/media/ben/work_2021/mtk/<workspace>/vendor/<vendor>/proprietary/trustzone/<tee>/source/binary/sec_modules/ta_debug/b657ba17-b3b3-47f5-b389-6b53f30c0baf.ta"
-TA_RELEASE = "/media/ben/work_2021/mtk/<workspace>/vendor/<vendor>/proprietary/trustzone/<tee>/source/binary/sec_modules/b657ba17-b3b3-47f5-b389-6b53f30c0baf.ta"
+from paths import TA_DEBUG, TA_RELEASE, require_workspace  # noqa: E402
+
+require_workspace()
 
 # ECDSA_sign_ex vaddr 0x4b52a
 # .ta file_off = 0x134 (TA header) + 0x8020 (text file_off) + (0x4b52a - 0x20)

@@ -14,7 +14,9 @@ SRC  = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                     "..", "b657ba17-b3b3-47f5-b389-6b53f30c0baf.ta.orig_backup")
 OUT  = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                     "b657_ecfix_resigned.ta")
-KEY  = "/media/ben/work_2021/mtk/<workspace>/external/tee/tools/ta_resign_tool-release/linux/ta_private_key.pem"
+from paths import TA_PRIVATE_KEY as KEY, require_workspace  # noqa: E402
+
+require_workspace()
 TA_OFF = 0x18472
 ORIG  = bytes.fromhex("4946")   # mov r1, r9 (密文) -- BUG
 NEW   = bytes.fromhex("2146")   # mov r1, r4 (明文栈缓冲) -- FIX
@@ -35,7 +37,7 @@ def main():
     assert PKCS1_v1_5.new(key).verify(h2, out[20+32:20+32+256])
     print(f"patched+resigned -> {OUT}")
     print(f"sha256 {hashlib.sha256(out).hexdigest()}")
-    print(f"signature verified with {KEY.split('/')[-1]}")
+    print(f"signature verified with {KEY.name}")
 
 if __name__ == "__main__":
     main()

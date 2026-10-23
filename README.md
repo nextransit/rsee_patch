@@ -104,7 +104,8 @@ rsee_patch/
 | `docs/qemu-tee-linkB-breakthrough.md` | QEMU 启动链打通的关键突破点 |
 | `patches/patch_b657_pubkey_recover.py` | **PATCH-C 脚本**（0x6f42c 改分支目标） |
 | `patches/patch_b657_ec_keyblob_fix.py` | **fix1 脚本**（0x1033e 改源寄存器） |
-| `patches/apply_ecdsa_rootcause_fix.sh` | 一键应用 fix8（校验 sha256 + 落位断言） |
+| `patches/paths.py` | 统一的工程路径解析（`WORKSPACE` / `SEC_MODULES` / `RESIGN_TOOL_DIR`） |
+| `patches/apply_ecdsa_rootcause_fix.sh` | 一键应用 fix8（校验 sha256 + 两处落位断言） |
 | `patches/rollback.sh` / `restore_factory_ta.py` | 回滚到原厂 TA |
 | `ta/b657_fix8_patched.ta` | **最终交付 TA**（fix1 + PATCH-C，已重签） |
 | `gif/record_ecdsa_boot.sh` | 录「QEMU 启动 → ECDSA 验签通过」GIF |
@@ -128,13 +129,23 @@ cd patches
 
 ```bash
 # fix1：read_ec_key_from_keyblob 拷明文（0x1033e: 49 46 → 21 46）
-python3 patches/patch_b657_ec_keyblob_fix.py --elf b657.elf --out patched.elf
+python3 patches/patch_b657_ec_keyblob_fix.py
 
 # PATCH-C：d2i_ECPrivateKey 跳过坏 pubkey（0x6f42c: 88 b1 → 00 b1）
 python3 patches/patch_b657_pubkey_recover.py --elf b657.elf --out patched.elf
 ```
 
 两个脚本都是**幂等**的：已打过补丁会打印 `[skip]`，字节对不上会直接报错退出。
+
+需要用到固件工程里的路径（TA 位置、重签私钥）时，先设 `WORKSPACE`：
+
+```bash
+export WORKSPACE=/path/to/your/android/workspace
+export RESIGN_TOOL_DIR=$WORKSPACE/external/tee/tools/ta_resign_tool-release/linux
+```
+
+`patches/paths.py` 统一解析这些路径；也可用 `SEC_MODULES` / `RESIGN_TOOL_DIR`
+单独覆盖。路径解析全部集中在 `paths.py` 一处，改工程布局只改这一个文件。
 
 ### 3. 重签名
 

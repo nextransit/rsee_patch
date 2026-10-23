@@ -224,6 +224,13 @@ TA 会把 **keyblob 里存的 purpose 与调用方传的 purpose 做 memcmp**。
 ./test-b657-final.sh          # 端到端验证
 ```
 
+### 应用补丁到固件
+
+```bash
+export WORKSPACE=/path/to/your/android/workspace
+cd patches && ./apply_ecdsa_rootcause_fix.sh
+```
+
 成功标志：
 
 ```
@@ -256,7 +263,8 @@ PASS ECDSA secp521r1 SHA-512 sign+verify - sig=104B DER=true tee=true
 | `docs/tee-b657-open-session-rootcause.md` | OpenSession `ffff000f` 的成因（重签问题） |
 | `patches/patch_b657_ec_keyblob_fix.py` | fix1 脚本（0x1033e） |
 | `patches/patch_b657_pubkey_recover.py` | PATCH-C 脚本（0x6f42c） |
-| `patches/apply_ecdsa_rootcause_fix.sh` | 一键应用 fix8（sha256 校验 + 落位断言） |
+| `patches/paths.py` | 统一工程路径解析（`WORKSPACE` / `SEC_MODULES` / `RESIGN_TOOL_DIR`） |
+| `patches/apply_ecdsa_rootcause_fix.sh` | 一键应用 fix8（sha256 校验 + 两处落位断言） |
 | `patches/rollback.sh` / `restore_factory_ta.py` | 回滚原厂 TA |
 | `ta/b657_fix8_patched.ta` | 最终交付 TA（fix1 + PATCH-C，已重签） |
 | `gif/record_ecdsa_boot.sh` | 录「QEMU 启动 → ECDSA 验签通过」GIF |

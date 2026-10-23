@@ -33,7 +33,9 @@ BASE = os.path.dirname(os.path.abspath(__file__))
 PARENT = os.path.dirname(BASE)
 TA_DEBUG   = os.path.join(BASE, "b657ba17-b3b3-47f5-b389-6b53f30c0baf.ta")
 TA_RELEASE = os.path.join(PARENT, "b657ba17-b3b3-47f5-b389-6b53f30c0baf.ta")
-KEY = "/media/ben/work_2021/mtk/<workspace>/external/tee/tools/ta_resign_tool-release/linux/ta_private_key.pem"
+from paths import TA_PRIVATE_KEY as KEY, require_workspace  # noqa: E402
+
+require_workspace()
 
 # FIX1
 TA_OFF = 0x18472

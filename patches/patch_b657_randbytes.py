@@ -21,8 +21,9 @@ returns -1 which user space can handle (or even crash gracefully).
 """
 import sys, struct, os, hashlib, shutil
 
-TA_DEBUG   = "/media/ben/work_2021/mtk/<workspace>/vendor/<vendor>/proprietary/trustzone/<tee>/source/binary/sec_modules/ta_debug/b657ba17-b3b3-47f5-b389-6b53f30c0baf.ta"
-TA_RELEASE = "/media/ben/work_2021/mtk/<workspace>/vendor/<vendor>/proprietary/trustzone/<tee>/source/binary/sec_modules/b657ba17-b3b3-47f5-b389-6b53f30c0baf.ta"
+from paths import TA_DEBUG, TA_RELEASE, require_workspace  # noqa: E402
+
+require_workspace()
 
 # b657 .ta format: 308 (0x134) byte TEE TA header, then ELF
 # ELF program header: LOAD #0 file_off 0x8000, vaddr 0x0
