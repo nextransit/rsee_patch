@@ -1,0 +1,39 @@
+# 凭证与密钥（绝不入库）
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+!docs/*.pem.example
+
+# 原厂 TA 变体（只保留重签后的修复 TA）
+*.ta.orig_backup
+*.orig_backup
+factory_backup/
+patched_backup/
+patched_v3_backup/
+*_factory*.ta
+*_orig*.ta
+
+# 构建产物
+__pycache__/
+*.pyc
+*.pyo
+build/
+dist/
+out/
+*.o
+*.so
+*.elf
+*.bin
+!ta/*.ta
+
+# 运行时产物
+serial*.log
+*.log
+!evidence/*.log
+/work/
+/logs/
